@@ -1001,7 +1001,8 @@ var Slowparse = (function() {
     _knownHTMLElement: function(tagName) {
       return this.voidHtmlElements.indexOf(tagName) > -1 ||
               this.htmlElements.indexOf(tagName) > -1 ||
-              this.obsoleteHtmlElements.indexOf(tagName) > -1;
+              this.obsoleteHtmlElements.indexOf(tagName) > -1 ||
+              /\w+-\w+/.test(tagName);
     },
     // This is a helper function to determine whether a given string
     // is a legal SVG element tag.
@@ -1071,7 +1072,7 @@ var Slowparse = (function() {
       }
 
       this.stream.eat(/\//);
-      this.stream.eatWhile(/[\w\d]/);
+      this.stream.eatWhile(/[\w\d-]/);
       var token = this.stream.makeToken();
       var tagName = token.value.slice(1).toLowerCase();
 
